@@ -24,8 +24,20 @@ class Choice(models.Model):
         return self.choice_text
 
 
-class Car(models.Model):
+class Competitor(models.Model):
     name = models.CharField(max_length=255)
-    price = models.DecimalField(max_digits=5, decimal_places=2)
-    photo = models.ImageField(upload_to='cars')
-    specs = models.FileField(upload_to='specs')
+
+    def __str__(self):
+        return self.name
+
+
+class Level(models.Model):
+    number = models.IntegerField()
+    game = models.ForeignKey(Competitor, on_delete=models.CASCADE)
+    long_graph = models.ImageField(upload_to='long_graphs')
+
+    class Meta:
+        unique_together = ['number', 'game']
+
+    def __str__(self):
+        return '{}({})'.format(self.game, self.number)

@@ -3,7 +3,7 @@ from django.shortcuts import get_object_or_404, render
 from django.urls import reverse
 from django.views import generic
 
-from .models import Choice, Question
+from .models import Choice, Question, Level
 
 
 class IndexView(generic.ListView):
@@ -14,6 +14,18 @@ class IndexView(generic.ListView):
         return Question.objects.order_by('-pub_date')[:5]
 
 
+class LevelsView(generic.ListView):
+    template_name = 'polls/levels_index.html'
+
+    def get_queryset(self):
+        return Level.objects.filter(game__name='BS')
+
+
+class LevelDetailView(generic.DetailView):
+    model = Level
+    template_name = 'polls/level_detail.html'
+
+
 class DetailView(generic.DetailView):
     model = Question
     template_name = 'polls/detail.html'
@@ -22,6 +34,16 @@ class DetailView(generic.DetailView):
 class ResultsView(generic.DetailView):
     model = Question
     template_name = 'polls/results.html'
+
+
+def level_detail(request):
+    if request.method == 'GET':
+        level_num = request.GET.get('level_num')
+        level_list = Level.objects.filter(number=level_num)
+
+        return render(request, 'polls/level_detail.html', {
+            'level_list': level_list,
+        })
 
 
 def vote(request, question_id):

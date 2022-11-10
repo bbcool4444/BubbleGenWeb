@@ -1,0 +1,33 @@
+{% load static %}
+<link rel="stylesheet" href="{% static 'polls/style.css' %}">
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <div>
+        <label>关卡</label>
+        <form action="{% url 'polls:level_detail' %}" method="get">
+            <select name="level_num">
+                <option>1</option>
+                <option>2</option>
+                <option>3</option>
+            </select>
+            <input type="submit" value="go to level">
+        </form>
+    </div>
+    {% if level_list %}
+        <ul>
+            {% for level in level_list %}
+                <li>{{ level }}</li>
+                <img src="/media/{{ level.long_graph }}" width="200px" />
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No levels are available.</p>
+    {% endif %}
+</body>
+</html>

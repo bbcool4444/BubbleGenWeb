@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Question, Car
+from .models import Question, Competitor, Level
 
 
 class QuestionAdmin(admin.ModelAdmin):
@@ -7,4 +7,5 @@ class QuestionAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Question, QuestionAdmin)
-admin.site.register(Car)
+admin.site.register(Competitor)
+admin.site.register(Level)
