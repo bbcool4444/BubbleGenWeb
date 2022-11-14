@@ -1,33 +1,33 @@
+{% extends 'dashboard.html' %}
 {% load static %}
 <link rel="stylesheet" href="{% static 'polls/style.css' %}">
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-    <div>
-        <label>关卡</label>
-        <form action="{% url 'polls:level_detail' %}" method="get">
-            <select name="level_num">
-                <option>1</option>
-                <option>2</option>
-                <option>3</option>
-            </select>
-            <input type="submit" value="go to level">
-        </form>
-    </div>
-    {% if level_list %}
-        <ul>
-            {% for level in level_list %}
-                <li>{{ level.game }}</li>
-                <img src="/media/{{ level.long_graph }}" width="200px" />
-            {% endfor %}
-        </ul>
-    {% else %}
-        <p>No levels are available.</p>
-    {% endif %}
-</body>
-</html>
+{% block level_selecter %}
+  <label>Installed: {{ total_level_iter|length }}</label>
+  <form action="{% url 'polls:level_detail' %}" method="get">
+      <select name="level_num">
+          {% for level_num in total_level_iter %}
+          <option>{{ forloop.counter }}</option>
+          {% endfor %}
+      </select>
+      <input type="submit" value="go to level">
+  </form>
+{% endblock %}
+
+{% block level_info %}
+  {% if level_list %}
+      <div class="row placeholders">
+      {% for level in level_list %}
+          <div class="col-xs-6 col-sm-3 ">
+              <img src="/media/{{ level.long_graph }}" width="200" height="200" class="img-responsive" alt="Generic placeholder thumbnail">
+              <h4>{{ level.game }}</h4>
+              <span class="text-muted">Something else</span>
+          </div>
+      {% endfor %}
+      </div>
+
+  {% else %}
+      <p>No levels are available.</p>
+  {% endif %}
+
+{% endblock %}

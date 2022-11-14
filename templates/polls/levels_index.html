@@ -9,12 +9,14 @@
 </head>
 <body>
     <div>
-        <label>关卡</label>
+        <label>当前实装关卡</label>
+        <br/>
+        <label>实装关卡数量：{{ level_list|length }}</label>
         <form action="{% url 'polls:level_detail' %}" method="get">
             <select name="level_num">
-                <option>1</option>
-                <option>2</option>
-                <option>3</option>
+                {% for level in level_list %}
+                    <option>{{ forloop.counter }}</option>
+                {% endfor %}
             </select>
             <input type="submit" value="go to level">
         </form>

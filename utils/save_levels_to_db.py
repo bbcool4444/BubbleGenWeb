@@ -14,10 +14,10 @@ def get_level_number_from_file_name(level_name):
     return int(os.path.split(level_name)[1].split('.')[0].split('_')[1])
 
 
-competitor = Competitor.objects.get(name='BS')
+competitor = Competitor.objects.get(name='Ivy')
 print('{} levels *before* insertion'.format(competitor.level_set.count()))
 
-fp = 'E:/Python_Project/LevelGenerator/Frames/BitMango'
+fp = 'E:/Python_Project/LevelGenerator/Frames/Ivy'
 for fn in os.listdir(fp):
     if fn.endswith('jpg'):
         path = Path(fp + '/' + fn)

@@ -3,7 +3,8 @@ from django.shortcuts import get_object_or_404, render
 from django.urls import reverse
 from django.views import generic
 
-from .models import Choice, Question, Level
+from .models import Choice, Question, Level, Competitor
+from .forms import NameForm
 
 
 class IndexView(generic.ListView):
@@ -28,7 +29,7 @@ class LevelDetailView(generic.DetailView):
 
 class DetailView(generic.DetailView):
     model = Question
-    template_name = 'polls/detail.html'
+    template_name = 'polls/details.html'
 
 
 class ResultsView(generic.DetailView):
@@ -40,9 +41,11 @@ def level_detail(request):
     if request.method == 'GET':
         level_num = request.GET.get('level_num')
         level_list = Level.objects.filter(number=level_num)
+        comp_bs = Competitor.objects.get(name='BS')
 
         return render(request, 'polls/level_detail.html', {
             'level_list': level_list,
+            'total_level_iter': range(comp_bs.level_set.count()),
         })
 
 
@@ -51,7 +54,7 @@ def vote(request, question_id):
     try:
         selected_choice = question.choice_set.get(pk=request.POST['choice'])
     except (KeyError, Choice.DoesNotExist):
-        return render(request, 'polls/detail.html', {
+        return render(request, 'polls/details.html', {
             'question': question,
             'error_message': "You didn't select a choice.",
         })
@@ -61,3 +64,10 @@ def vote(request, question_id):
         selected_choice.save()
 
         return HttpResponseRedirect(reverse('polls:results', args=(question.id,)))
+
+
+def bootstrap_test(request):
+    form = NameForm()
+    return render(request, 'polls/bootstrap_test.html', {
+        'form': form,
+    })
