@@ -1,0 +1,32 @@
+{% extends "bootstrap/base.html" %}
+
+{% block level_selecter %}
+  <label>Installed: {{ level_count }}</label>
+  <form method="get">
+      <select name="level_num">
+          {% for level_num in level_sequence %}
+          <option>{{ level_num }}</option>
+          {% endfor %}
+      </select>
+      <input type="submit" value="go to level">
+  </form>
+{% endblock %}
+
+{% block level_info %}
+  {% if level_list %}
+      <div class="row placeholders">
+      {% for level in level_list %}
+          <div class="col-xs-6 col-sm-3 ">
+              <img src="{{ level.long_graph }}" width="200" height="200" class="img-responsive" alt="Generic placeholder thumbnail">
+              <h4>{{ level.game.name }}</h4>
+              <span class="text-muted">Something else</span>
+          </div>
+      {% endfor %}
+      </div>
+
+  {% else %}
+      <p>No levels are available.</p>
+  {% endif %}
+
+{% endblock %}
+
