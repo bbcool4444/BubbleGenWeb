@@ -17,9 +17,12 @@
       <div class="row placeholders">
       {% for level in level_list %}
           <div class="col-xs-6 col-sm-3 ">
-              <img src="{{ level.long_graph }}" width="200" height="200" class="img-responsive" alt="Generic placeholder thumbnail">
+              <img src="{{ level.long_graph }}" width="200" height="200" class="img-thumbnail" alt="Generic placeholder thumbnail">
               <h4>{{ level.game.name }}</h4>
-              <span class="text-muted">Something else</span>
+              {% if level.e_count %}
+                  <p>Elements: {{ level.e_count }}</p>
+                  <span class="text-muted">{{ level.e_dict }}</span>
+              {% endif %}
           </div>
       {% endfor %}
       </div>

@@ -31,8 +31,10 @@ class Level(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     number = db.Column(db.Integer)
     game_id = db.Column(db.Integer, db.ForeignKey('game.id'))
-    long_graph = db.Column(db.String(80), nullable=True)
     game = db.relationship("Game", backref=db.backref("game", uselist=False))
+    long_graph = db.Column(db.String(80), nullable=True)
+    e_count = db.Column(db.Integer)
+    e_dict = db.Column(db.Text)
 
 
 with app.app_context():

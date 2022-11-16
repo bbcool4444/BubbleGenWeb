@@ -69,7 +69,9 @@ def init_app(app):
 if __name__ == '__main__':
     # Rename the files already in folders to db image format.
     fp = 'static/images'
+    project = 'Ivy'
     for fn in os.listdir(fp):
-        old_name = '{}/{}'.format(fp, fn)
-        new_name = '{}/{}'.format(fp, get_new_name('BitMango', fn))
-        os.rename(old_name, new_name)
+        if 'Level' in fn:
+            old_name = '{}/{}'.format(fp, fn)
+            new_name = '{}/{}'.format(fp, get_new_name(project, fn))
+            os.rename(old_name, new_name)
